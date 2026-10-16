@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RVM - Rumah Vermak Malang</title>
+    <!-- FontAwesome icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0d6efd;
+            --dark-blue: #0a4b9a;
+            --light-blue: #e7f1ff;
+            --bg-white: #ffffff;
+            --text-dark: #212529;
+            --gray-border: #dee2e6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f8fb;
+            color: var(--text-dark);
+        }
+
+        /* HEADER & NAV */
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-auth-btn {
+            background: white;
+            color: var(--primary-blue);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .user-auth-btn:hover {
+            background: var(--light-blue);
+        }
+
+        .header-right .btn-owner {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .header-right .btn-owner:hover {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* SERVICE GRID */
+        .section-title {
+            text-align: center;
+            color: var(--dark-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-border);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+
+        .card-body {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-price {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .btn-order {
+            margin-top: auto;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .btn-order:hover {
+            background: var(--dark-blue);
+        }
+
+        /* MODAL STYLES */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 480px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--gray-border);
+            border-radius: 6px;
+        }
+
+        .payment-info {
+            background: var(--light-blue);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+            text-align: center;
+        }
+
+        .payment-info img {
+            max-width: 180px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 2px solid var(--primary-blue);
+        }
+
+        /* STRUK KUITANSI */
+        .receipt-card {
+            background: #fff;
+            border: 2px dashed #000;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #000;
+            margin-bottom: 15px;
+        }
+
+        .receipt-header {
+            text-align: center;
+            border-bottom: 1px dashed #000;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .receipt-total {
+            border-top: 1px dashed #000;
+            border-bottom: 1px dashed #000;
+            padding: 8px 0;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        /* OWNER DASHBOARD */
+        #ownerDashboard {
+            display: none;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+        }
+
+        .dashboard-actions-top {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .stat-card h4 { color: #666; font-size: 0.9rem; }
+        .stat-card p { font-size: 1.5rem; font-weight: bold; color: var(--dark-blue); }
+
+        .dashboard-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            min-width: 600px;
+        }
+
+        table, th, td {
+            border: 1px solid var(--gray-border);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: var(--light-blue);
+            color: var(--dark-blue);
+        }
+
+        .btn-action {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-size: 0.85rem;
+            margin-right: 4px;
+        }
+
+        .btn-wa { background-color: #25D366; text-decoration: none; display: inline-block;}
+        .btn-done { background-color: #0d6efd; }
+        .btn-delete { background-color: #dc3545; }
+        .btn-edit { background-color: #ffc107; color: black; }
+        .btn-settings { background-color: #6c757d; }
+
+        .badge-pending {
+            background: #fff3cd; color: #856404; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem;
+        }
+        .badge-done {
+            background: #d4edda; color: #155724; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #receiptCardModal, #receiptCardModal * { visibility: visible; }
+            #receiptCardModal { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-left">
+            <div class="brand-logo"><i class="fa-solid fa-scissors"></i> RVM Malang</div>
+            <button class="user-auth-btn" id="loginUserBtn" onclick="openModal('userLoginModal')">
+                <i class="fa-solid fa-user"></i> <span id="userStatus">Login Pelanggan</span>
+            </button>
+        </div>
+        <div class="header-right">
+            <button class="btn-owner" id="ownerBtn" onclick="handleOwnerAccess()">
+                <i class="fa-solid fa-lock"></i> Akses Owner
+            </button>
+        </div>
+    </header>
+
+    <!-- USER VIEW -->
+    <div id="userView" class="container">
+        <div class="hero">
+            <h1>Rumah Vermak Malang (RVM)</h1>
+            <p>Jasa Perbaikan & Penjahitan Pakaian Profesional dengan Hasil Rapi dan Cepat.</p>
+        </div>
+
+        <h2 class="section-title">Layanan Kami</h2>
+        <div class="services-grid" id="servicesContainer">
+            <!-- Layanan dimasukkan via JavaScript -->
+        </div>
+    </div>
+
+    <!-- OWNER DASHBOARD VIEW -->
+    <div id="ownerDashboard" class="container">
+        <div class="dashboard-header">
+            <h2><i class="fa-solid fa-user-gear"></i> Dashboard Owner</h2>
+            <div class="dashboard-actions-top">
+                <button class="btn-action btn-settings" onclick="openModal('changePasswordModal')"><i class="fa-solid fa-key"></i> Ganti Password</button>
+                <button class="btn-action btn-settings" onclick="openModal('changeQrisModal')"><i class="fa-solid fa-qrcode"></i> Ganti Foto QRIS</button>
+                <button class="btn-action btn-delete" onclick="logoutOwner()">Keluar</button>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Pendapatan Minggu Ini</h4>
+                <p id="statWeekly">Rp 800.000</p>
+            </div>
+            <div class="stat-card">
+                <h4>Pendapatan Bulan Ini</h4>
+                <p id="statMonthly">Rp 8.000.000</p>
+            </div>
+            <div class="stat-card">
+                <h4>Pendapatan Tahun Ini</h4>
+                <p id="statYearly">Rp 100.000.000</p>
+            </div>
+        </div>
+
+        <!-- TABEL PESANAN HARI INI -->
+        <div class="dashboard-section">
+            <h3>Pesanan Masuk (Perlu Diproses)</h3>
+            <table id="activeOrdersTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Pelanggan</th>
+                        <th>No HP</th>
+                        <th>Jasa Layanan</th>
+                        <th>Kisaran Harga</th>
+                        <th>Metode Bayar</th>
+                        <th>Request / Catatan</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Row pesanan aktif -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TABEL RIWAYAT PESANAN -->
+        <div class="dashboard-section">
+            <h3>Riwayat Pesanan Selesai</h3>
+            <table id="historyOrdersTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Pelanggan</th>
+                        <th>No HP</th>
+                        <th>Jasa Layanan</th>
+                        <th>Kisaran Harga</th>
+                        <th>Request / Catatan</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Row riwayat -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- KELOLA MENU / CRUD -->
+        <div class="dashboard-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3>Manajemen Menu, Rentang Harga & Foto Galeri (CRUD)</h3>
+                <button class="btn-order" style="width: auto; padding: 6px 12px;" onclick="openModal('addMenuModal')">+ Tambah Menu</button>
+            </div>
+            <table id="manageMenuTable">
+                <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>Nama Layanan</th>
+                        <th>Rentang Harga</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Row kelola menu -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MODAL USER LOGIN -->
+    <div class="modal" id="userLoginModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('userLoginModal')">&times;</span>
+            <h3>Login Pelanggan</h3>
+            <br>
+            <form id="userLoginForm" onsubmit="handleUserLogin(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="custName" required placeholder="Masukkan nama Anda">
+                </div>
+                <div class="form-group">
+                    <label>Nomor HP (WhatsApp)</label>
+                    <input type="number" id="custPhone" required placeholder="Contoh: 08123456789">
+                </div>
+                <button type="submit" class="btn-order">Masuk / Simpan</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL ORDER -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('orderModal')">&times;</span>
+            <h3>Form Pemesanan</h3>
+            <br>
+            <form id="orderForm" onsubmit="submitOrder(event)">
+                <input type="hidden" id="orderServiceId">
+                <div class="form-group">
+                    <label>Layanan yang Dipilih</label>
+                    <input type="text" id="orderServiceName" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Kisaran Harga</label>
+                    <input type="text" id="orderServicePrice" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Metode Pembayaran</label>
+                    <select id="paymentMethod" onchange="showPaymentInfo(this.value)" required>
+                        <option value="">-- Pilih Pembayaran --</option>
+                        <option value="Cash">Cash / Bayar di Tempat</option>
+                        <option value="QRIS">QRIS (Scan Barcode)</option>
+                        <option value="BCA">Transfer Bank BCA</option>
+                        <option value="BRI">Transfer Bank BRI</option>
+                    </select>
+                </div>
+                
+                <!-- DETAIL BAYAR + QRIS -->
+                <div class="payment-info" id="payDetail"></div>
+
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Catatan / Request untuk Owner</label>
+                    <textarea id="userRequest" rows="3" placeholder="Contoh: Potong celana 3 cm, kecilkan bagian pinggang..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-order">Konfirmasi Pesanan</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT MENU -->
+    <div class="modal" id="editMenuModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('editMenuModal')">&times;</span>
+            <h3>Edit Detail Layanan Produk</h3>
+            <br>
+            <form onsubmit="handleUpdateMenu(event)">
+                <input type="hidden" id="editMenuId">
+                <div class="form-group">
+                    <label>Nama Layanan</label>
+                    <input type="text" id="editMenuName" required>
+                </div>
+                <div class="form-group">
+                    <label>Rentang Harga (Contoh: 15.000 - 30.000)</label>
+                    <input type="text" id="editMenuPrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Ganti Foto dari Perangkat / Galeri</label>
+                    <input type="file" id="editMenuImgFile" accept="image/*">
+                </div>
+                <button type="submit" class="btn-order">Simpan Perubahan</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL TAMBAH MENU -->
+    <div class="modal" id="addMenuModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('addMenuModal')">&times;</span>
+            <h3>Tambah Menu Layanan Baru</h3>
+            <br>
+            <form onsubmit="handleAddMenu(event)">
+                <div class="form-group">
+                    <label>Nama Layanan</label>
+                    <input type="text" id="newMenuName" required>
+                </div>
+                <div class="form-group">
+                    <label>Rentang Harga (Contoh: 20.000 - 40.000)</label>
+                    <input type="text" id="newMenuPrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Pilih Foto dari Galeri Perangkat</label>
+                    <input type="file" id="newMenuImgFile" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn-order">Simpan Menu</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL GANTI PASSWORD OWNER -->
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('changePasswordModal')">&times;</span>
+            <h3>Ganti Password Owner</h3>
+            <br>
+            <form onsubmit="handleChangePassword(event)">
+                <div class="form-group">
+                    <label>Password Lama</label>
+                    <input type="password" id="oldPassword" required placeholder="Masukkan password saat ini">
+                </div>
+                <div class="form-group">
+                    <label>Password Baru</label>
+                    <input type="password" id="newPassword" required placeholder="Masukkan password baru">
+                </div>
+                <button type="submit" class="btn-order">Perbarui Password</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL GANTI FOTO QRIS -->
+    <div class="modal" id="changeQrisModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('changeQrisModal')">&times;</span>
+            <h3>Ganti Foto QRIS Pembayaran</h3>
+            <br>
+            <form onsubmit="handleChangeQris(event)">
+                <div class="form-group">
+                    <label>Pilih Gambar QRIS Baru dari Galeri</label>
+                    <input type="file" id="qrisImgFile" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn-order">Simpan QRIS Baru</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL STRUK BUKTI PEMBAYARAN -->
+    <div class="modal" id="receiptModal">
+        <div class="modal-content">
+            <span class="close-btn no-print" onclick="closeModal('receiptModal')">&times;</span>
+            <div id="receiptCardModal" class="receipt-card">
+                <!-- Struk akan diisi JS -->
+            </div>
+            <button class="btn-order no-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Cetak / Simpan Struk</button>
+        </div>
+    </div>
+
+    <script>
+        // DATA STATE INITIALIZATION
+        let currentUser = JSON.parse(localStorage.getItem('rvm_user')) || null;
+        let ownerPassword = localStorage.getItem('rvm_owner_pass') || "123";
+        let customQrisImg = localStorage.getItem('rvm_qris_img') || "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=QRIS_RUMAH_VERMAK_MALANG";
+        let isOwnerLoggedIn = false;
+
+        let services = JSON.parse(localStorage.getItem('rvm_services')) || [
+            { id: 1, name: "Vermak Baju", price: "15.000 - 25.000", img: "" },
+            { id: 2, name: "Seragam", price: "20.000 - 40.000", img: "" },
+            { id: 3, name: "Jas", price: "50.000 - 100.000", img: "" },
+            { id: 4, name: "Bet di Seragam", price: "5.000 - 10.000", img: "" },
+            { id: 5, name: "Celana Jeans", price: "25.000 - 45.000", img: "" },
+            { id: 6, name: "Jaket", price: "30.000 - 60.000", img: "" }
+        ];
+
+        let orders = JSON.parse(localStorage.getItem('rvm_orders')) || [
+            { id: 101, name: "Budi Santoso", phone: "081234567890", service: "Celana Jeans", price: "25.000 - 45.000", payment: "Cash", request: "Potong 3 cm rapi", status: "Belum Selesai", date: "2026-09-09 09:15" },
+            { id: 102, name: "Siti Rahma", phone: "085712345678", service: "Jas", price: "50.000 - 100.000", payment: "QRIS", request: "Kecilkan pinggang 2cm", status: "Belum Selesai", date: "2026-09-09 10:00" }
+        ];
+
+        // INIT LOAD
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUserHeader();
+            renderServices();
+        });
+
+        function saveData() {
+            localStorage.setItem('rvm_services', JSON.stringify(services));
+            localStorage.setItem('rvm_orders', JSON.stringify(orders));
+            localStorage.setItem('rvm_owner_pass', ownerPassword);
+            localStorage.setItem('rvm_qris_img', customQrisImg);
+        }
+
+        // RENDER SERVICES (KATALOG)
+        function renderServices() {
+            const container = document.getElementById('servicesContainer');
+            container.innerHTML = '';
+            services.forEach(item => {
+                let imgSource = item.img ? item.img : 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=400&q=80';
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="${imgSource}" alt="${item.name}">
+                        <div class="card-body">
+                            <h3 class="card-title">${item.name}</h3>
+                            <div class="card-price">Rp ${item.price}</div>
+                            <button class="btn-order" onclick="initiateOrder(${item.id})">Pesan Jasa</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // USER AUTHENTICATION
+        function handleUserLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            
+            currentUser = { name, phone };
+            localStorage.setItem('rvm_user', JSON.stringify(currentUser));
+            updateUserHeader();
+            closeModal('userLoginModal');
+            alert(`Selamat datang, ${name}!`);
+        }
+
+        function updateUserHeader() {
+            const label = document.getElementById('userStatus');
+            if(currentUser) {
+                label.innerText = `Hi, ${currentUser.name}`;
+            } else {
+                label.innerText = 'Login Pelanggan';
+            }
+        }
+
+        // ORDER PROCESS
+        function initiateOrder(serviceId) {
+            if (!currentUser) {
+                alert("Silakan Login terlebih dahulu di pojok kiri atas untuk memesan!");
+                openModal('userLoginModal');
+                return;
+            }
+
+            const item = services.find(s => s.id === serviceId);
+            if(item) {
+                document.getElementById('orderServiceId').value = item.id;
+                document.getElementById('orderServiceName').value = item.name;
+                document.getElementById('orderServicePrice').value = `Rp ${item.price}`;
+                document.getElementById('paymentMethod').value = "";
+                document.getElementById('userRequest').value = "";
+                document.getElementById('payDetail').style.display = "none";
+                openModal('orderModal');
+            }
+        }
+
+        function showPaymentInfo(val) {
+            const box = document.getElementById('payDetail');
+            box.style.display = 'block';
+            if (val === 'Cash') {
+                box.innerHTML = "Bayar tunai saat pakaian diserahkan ke toko RVM.";
+            } else if (val === 'QRIS') {
+                box.innerHTML = `
+                    <p>Silakan scan kode QRIS di bawah ini untuk membayar:</p>
+                    <img src="${customQrisImg}" alt="QRIS Code">
+                    <p style="font-size:0.8rem; margin-top:5px; color:#555;">Atas Nama: Rumah Vermak Malang</p>
+                `;
+            } else if (val === 'BCA') {
+                box.innerHTML = "<strong>No. Rek BCA: 8830-1234-56</strong><br>a/n Rumah Vermak Malang";
+            } else if (val === 'BRI') {
+                box.innerHTML = "<strong>No. Rek BRI: 0012-0100-5678-301</strong><br>a/n Rumah Vermak Malang";
+            } else {
+                box.style.display = 'none';
+            }
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            const serviceId = parseInt(document.getElementById('orderServiceId').value);
+            const service = services.find(s => s.id === serviceId);
+            const payment = document.getElementById('paymentMethod').value;
+            const requestText = document.getElementById('userRequest').value || "-";
+
+            const now = new Date();
+            const dateStr = now.toLocaleString('id-ID');
+
+            const newOrder = {
+                id: Date.now(),
+                name: currentUser.name,
+                phone: currentUser.phone,
+                service: service.name,
+                price: service.price,
+                payment: payment,
+                request: requestText,
+                status: "Belum Selesai",
+                date: dateStr
+            };
+
+            orders.push(newOrder);
+            saveData();
+            closeModal('orderModal');
+            generateReceipt(newOrder);
+        }
+
+        function generateReceipt(order) {
+            const container = document.getElementById('receiptCardModal');
+            container.innerHTML = `
+                <div class="receipt-header">
+                    <h2>RVM MALANG</h2>
+                    <p>Rumah Vermak Malang</p>
+                    <p style="font-size: 0.8rem;">${order.date}</p>
+                </div>
+                <div class="receipt-row"><span>ID Pesanan:</span> <span>#${order.id}</span></div>
+                <div class="receipt-row"><span>Nama:</span> <span>${order.name}</span></div>
+                <div class="receipt-row"><span>No HP:</span> <span>${order.phone}</span></div>
+                <div class="receipt-row"><span>Layanan:</span> <span>${order.service}</span></div>
+                <div class="receipt-row"><span>Metode Bayar:</span> <span>${order.payment}</span></div>
+                <div class="receipt-row" style="margin-top:5px;"><span>Request:</span> <span>${order.request}</span></div>
+                <div class="receipt-total receipt-row">
+                    <span>KISARAN TOTAL:</span>
+                    <span>Rp ${order.price}</span>
+                </div>
+                <p style="text-align: center; font-size: 0.8rem; margin-top: 10px;">
+                    *** Terima Kasih ***<br>Simpan struk ini sebagai bukti pemesanan.
+                </p>
+            `;
+            openModal('receiptModal');
+        }
+
+        // OWNER LOGIC
+        function handleOwnerAccess() {
+            if (isOwnerLoggedIn) {
+                showOwnerDashboard();
+                return;
+            }
+            const pass = prompt("Masukkan Password Owner:");
+            if (pass === ownerPassword) {
+                isOwnerLoggedIn = true;
+                showOwnerDashboard();
+            } else if (pass !== null) {
+                alert("Password Salah!");
+            }
+        }
+
+        function showOwnerDashboard() {
+            document.getElementById('userView').style.display = 'none';
+            document.getElementById('ownerDashboard').style.display = 'block';
+            renderOwnerDashboard();
+        }
+
+        function logoutOwner() {
+            isOwnerLoggedIn = false;
+            document.getElementById('ownerDashboard').style.display = 'none';
+            document.getElementById('userView').style.display = 'block';
+        }
+
+        function renderOwnerDashboard() {
+            renderActiveOrders();
+            renderHistoryOrders();
+            renderManageMenu();
+        }
+
+        function renderActiveOrders() {
+            const tbody = document.querySelector('#activeOrdersTable tbody');
+            tbody.innerHTML = '';
+            const active = orders.filter(o => o.status === "Belum Selesai");
+
+            if(active.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;">Tidak ada pesanan aktif saat ini.</td></tr>`;
+                return;
+            }
+
+            active.forEach((o, index) => {
+                let formattedPhone = o.phone.startsWith('0') ? '62' + o.phone.slice(1) : o.phone;
+                let waMessage = `Halo ${o.name}, kami dari Rumah Vermak Malang (RVM) mengonfirmasi pesanan ${o.service} Anda.\nCatatan: ${o.request}\nMetode Bayar: ${o.payment}`;
+                let waLink = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(waMessage)}`;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${o.name}</td>
+                        <td>${o.phone}</td>
+                        <td>${o.service}</td>
+                        <td>Rp ${o.price}</td>
+                        <td>${o.payment}</td>
+                        <td><i>${o.request || '-'}</i></td>
+                        <td><span class="badge-pending">${o.status}</span></td>
+                        <td>
+                            <a href="${waLink}" target="_blank" class="btn-action btn-wa"><i class="fa-brands fa-whatsapp"></i> WA</a>
+                            <button class="btn-action btn-done" onclick="markOrderDone(${o.id})"><i class="fa-solid fa-check"></i> Selesai</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderHistoryOrders() {
+            const tbody = document.querySelector('#historyOrdersTable tbody');
+            tbody.innerHTML = '';
+            const history = orders.filter(o => o.status === "Selesai");
+
+            if(history.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Belum ada riwayat pesanan selesai.</td></tr>`;
+                return;
+            }
+
+            history.forEach((o, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${o.name}</td>
+                        <td>${o.phone}</td>
+                        <td>${o.service}</td>
+                        <td>Rp ${o.price}</td>
+                        <td><i>${o.request || '-'}</i></td>
+                        <td><span class="badge-done">${o.status}</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function markOrderDone(orderId) {
+            const idx = orders.findIndex(o => o.id === orderId);
+            if (idx !== -1) {
+                orders[idx].status = "Selesai";
+                saveData();
+                renderOwnerDashboard();
+            }
+        }
+
+        // FITUR GANTI PASSWORD OWNER
+        function handleChangePassword(e) {
+            e.preventDefault();
+            const oldPass = document.getElementById('oldPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+
+            if (oldPass !== ownerPassword) {
+                alert("Password lama yang Anda masukkan salah!");
+                return;
+            }
+
+            ownerPassword = newPass;
+            saveData();
+            closeModal('changePasswordModal');
+            document.getElementById('changePasswordModal').querySelector('form').reset();
+            alert("Password owner berhasil diperbarui!");
+        }
+
+        // FITUR GANTI FOTO QRIS DARI GALERI
+        function handleChangeQris(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('qrisImgFile');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    customQrisImg = event.target.result;
+                    saveData();
+                    closeModal('changeQrisModal');
+                    document.getElementById('changeQrisModal').querySelector('form').reset();
+                    alert("Foto QRIS berhasil diperbarui dari perangkat!");
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        // CRUD MANAJEMEN MENU
+        function renderManageMenu() {
+            const tbody = document.querySelector('#manageMenuTable tbody');
+            tbody.innerHTML = '';
+
+            services.forEach(item => {
+                let imgSource = item.img ? item.img : 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=400&q=80';
+                tbody.innerHTML += `
+                    <tr>
+                        <td><img src="${imgSource}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;"></td>
+                        <td>${item.name}</td>
+                        <td>Rp ${item.price}</td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="openEditMenuModal(${item.id})">Edit</button>
+                            <button class="btn-action btn-delete" onclick="deleteMenu(${item.id})">Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function handleAddMenu(e) {
+            e.preventDefault();
+            const name = document.getElementById('newMenuName').value;
+            const price = document.getElementById('newMenuPrice').value;
+            const fileInput = document.getElementById('newMenuImgFile');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newService = {
+                        id: Date.now(),
+                        name,
+                        price,
+                        img: e.target.result
+                    };
+                    services.push(newService);
+                    saveData();
+                    renderServices();
+                    renderManageMenu();
+                    closeModal('addMenuModal');
+                    document.getElementById('addMenuModal').querySelector('form').reset();
+                    alert("Menu baru berhasil ditambahkan!");
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        function openEditMenuModal(serviceId) {
+            const item = services.find(s => s.id === serviceId);
+            if(item) {
+                document.getElementById('editMenuId').value = item.id;
+                document.getElementById('editMenuName').value = item.name;
+                document.getElementById('editMenuPrice').value = item.price;
+                document.getElementById('editMenuImgFile').value = "";
+                openModal('editMenuModal');
+            }
+        }
+
+        function handleUpdateMenu(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('editMenuId').value);
+            const name = document.getElementById('editMenuName').value;
+            const price = document.getElementById('editMenuPrice').value;
+            const fileInput = document.getElementById('editMenuImgFile');
+
+            const item = services.find(s => s.id === id);
+            if(item) {
+                item.name = name;
+                item.price = price;
+
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        item.img = e.target.result;
+                        saveData();
+                        renderServices();
+                        renderManageMenu();
+                        closeModal('editMenuModal');
+                        alert("Menu produk berhasil diperbarui!");
+                    }
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    saveData();
+                    renderServices();
+                    renderManageMenu();
+                    closeModal('editMenuModal');
+                    alert("Menu produk berhasil diperbarui!");
+                }
+            }
+        }
+
+        function deleteMenu(serviceId) {
+            if (confirm("Apakah Anda yakin ingin menghapus layanan ini?")) {
+                services = services.filter(s => s.id !== serviceId);
+                saveData();
+                renderServices();
+                renderManageMenu();
+            }
+        }
+
+        // MODAL UTILS
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+    </script>
+</body>
+</html>
